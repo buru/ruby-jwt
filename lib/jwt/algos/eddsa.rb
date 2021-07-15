@@ -19,11 +19,9 @@ module JWT
         public_key.verify(signature, signing_input)
       end
 
-      private
-
       def valid_algorithm?(algorithm, key)
-        algorithm_aliases = SUPPORTED.map(&:to_sym)
-        algorithm.downcase.to_sym == key.primitive || (algorithm_aliases.include?(algorithm) && algorithm_aliases.map(&:downcase).include?(key.primitive))
+        algorithm.downcase.to_sym == key.primitive ||
+          (SUPPORTED.include?(algorithm) && SUPPORTED.map(&:to_sym).map(&:downcase).include?(key.primitive))
       end
     end
   end
