@@ -14,7 +14,7 @@ module JWT
 
       def verify(to_verify)
         algorithm, public_key, signing_input, signature = to_verify.values
-        raise IncorrectAlgorithm, "payload algorithm is #{algorithm} but #{public_key.primitive} verification key was provided" unless valid_algorithm?(algorithm, key)
+        raise IncorrectAlgorithm, "payload algorithm is #{algorithm} but #{public_key.primitive} verification key was provided" unless valid_algorithm?(algorithm, public_key)
         raise DecodeError, "key given is a #{public_key.class} but has to be a RbNaCl::Signatures::Ed25519::VerifyKey" if public_key.class != RbNaCl::Signatures::Ed25519::VerifyKey
         public_key.verify(signature, signing_input)
       end
